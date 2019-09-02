@@ -1,0 +1,9 @@
+{
+    "prettier.eslintIntegration": true,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": true
+    }
+}
