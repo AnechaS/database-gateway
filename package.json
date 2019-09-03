@@ -9,7 +9,8 @@
     "start-dev": "set ELECTRON_DEVELOP=1 && npm run webpack && electron .",
     "webpack": "webpack --mode production",
     "webpack-w": "webpack --mode development -w",
-    "build": "npm run clean && npm run webpack && build",
+    "build": "npm run clean && npm run webpack && build -p never",
+    "release": "npm run clean && npm run webpack && build -p always",
     "clean": "npm run clean-build && npm run clean-webpack",
     "clean-webpack": "rm -rf ./dist",
     "clean-build": "rm -rf ./build",
@@ -78,18 +79,18 @@
     "appId": "com.electron.optimus",
     "productName": "optimus",
     "directories": {
-        "output": "build/"
+      "output": "build/"
     },
     "files": [
-        "node_modules/",
-        "dist/",
-        "renderer/",
-        "resources/",
-        "utils/",
-        "Connection.js",
-        "main.js",
-        "config.js",
-        "package.json"
+      "node_modules/",
+      "dist/",
+      "renderer/",
+      "resources/",
+      "utils/",
+      "Connection.js",
+      "main.js",
+      "config.js",
+      "package.json"
     ],
     "win": {
       "icon": "resources/icon.png",
@@ -98,11 +99,11 @@
       ]
     },
     "publish": [
-        {
-          "provider": "github",
-          "owner": "Anechasun",
-          "repo": "optimus-postgresql.git"
-        }
-      ]
+      {
+        "provider": "github",
+        "owner": "Anechasun",
+        "repo": "optimus-postgresql"
+      }
+    ]
   }
 }
