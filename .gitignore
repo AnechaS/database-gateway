@@ -4,7 +4,7 @@ dist
 package-lock.json
 yarn-error.log
 yarn.lock
-release
+build
 memory.sqlite
 renderer/bundle.js
 electron-builder.env
