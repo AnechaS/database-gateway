@@ -1,8 +1,8 @@
 {
-  "name": "optimus-postgresql",
+  "name": "gateway-database-client",
   "private": true,
-  "version": "1.0.0",
-  "description": "system external connection",
+  "version": "2.0.0",
+  "description": "system external connection database",
   "main": "main.js",
   "scripts": {
     "start": "npm run webpack && electron .",
@@ -24,6 +24,7 @@
     "react",
     "sqlite3",
     "postgresql",
+    "mysql",
     "socket.io",
     "request"
   ],
@@ -37,6 +38,7 @@
     "@fortawesome/fontawesome-free": "^5.10.2",
     "bootstrap": "^4.1.3",
     "jquery": "^3.3.1",
+    "mysql": "^2.17.1",
     "pg": "^7.4.3",
     "popper.js": "^1.14.4",
     "react": "^16.4.2",

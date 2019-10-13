@@ -3,7 +3,7 @@ const io = require('socket.io-client');
 const emit = require('events');
 const path = require('path');
 const request = require('request');
-const Connection = require('./Connection');
+const Memory = require('./Memory');
 const { CONNECTION_CREATED, CONNECTION_RECEIVED, CONNECTION_LOOK } = require('./utils/constants');
 const config = require('./config');
 
@@ -60,31 +60,24 @@ app.on('activate', () => {
 });
 
 ipcMain.on(CONNECTION_LOOK, async event => {
-    const result = await Connection.look();
+    const result = await Memory.lookConnect();
     event.returnValue = result;
 });
 
 ipcMain.on(CONNECTION_CREATED, async (event, data) => {
-    socket.emit('valid partner', data.code, async err => {
-        if (!err) {
-            try {
-                const result = await Connection.store(data);
-                socket.emit('new partner', data.code /*, (error) => {}*/);
-                event.sender.send(CONNECTION_RECEIVED, null, result);
-            } catch (error) {
-                dialog.showErrorBox('Connection failure', error.message);
-                event.sender.send(CONNECTION_RECEIVED, error.message, null);
-            }
-            return;
-        }
-        const error = new Error('Invalid Code');
+    try {
+        const result = await Memory.store(data);
+
+        socket.emit('new partner', data.code /*, (error) => {}*/);
+        event.sender.send(CONNECTION_RECEIVED, null, result);
+    } catch (error) {
         dialog.showErrorBox('Connection failure', error.message);
         event.sender.send(CONNECTION_RECEIVED, error.message, null);
-    });
+    }
 });
 
 socket.on('connect', async () => {
-    const conn = await Connection.look();
+    const conn = await Memory.lookConnect();
     if (conn) {
         socket.emit('new partner', conn.code, err => {
             if (err) {
@@ -95,7 +88,7 @@ socket.on('connect', async () => {
 });
 
 socket.on('query', async (sql, callback) => {
-    const result = await Connection.query(sql)
+    const result = await Memory.query(sql)
         .then(res => {
             return res.rows;
         })

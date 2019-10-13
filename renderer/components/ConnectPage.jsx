@@ -8,6 +8,7 @@ export default class ConnectPage extends React.Component {
 
         this.state = {
             isConnected: false,
+            driver: '',
             host: '',
             port: '',
             username: '',
@@ -16,6 +17,7 @@ export default class ConnectPage extends React.Component {
             code: '',
         };
 
+        this.handleDriverChange = this.handleDriverChange.bind(this);
         this.handleHospChange = this.handleHospChange.bind(this);
         this.handlePortChange = this.handlePortChange.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -31,6 +33,7 @@ export default class ConnectPage extends React.Component {
         if (con) {
             this.setState({
                 isConnected: true,
+                driver: con.driver,
                 host: con.host,
                 port: con.port,
                 username: con.username,
@@ -39,6 +42,10 @@ export default class ConnectPage extends React.Component {
                 code: con.code,
             });
         }
+    }
+
+    handleDriverChange(e) {
+        this.setState({ driver: e.target.value });
     }
 
     handleHospChange(e) {
@@ -78,7 +85,7 @@ export default class ConnectPage extends React.Component {
     }
 
     render() {
-        const { isConnected } = this.state;
+        const { isConnected, driver, host, port, username, password, database, code } = this.state;
         return (
             <div className="content-connect">
                 <div className="body">
@@ -94,6 +101,33 @@ export default class ConnectPage extends React.Component {
                                         className="input-group-text"
                                         id="inputGroup-sizing-default"
                                     >
+                                        <i className="fas fa-dice-d6" style={{ width: '30px' }}></i>
+                                    </span>
+                                </div>
+                                <select
+                                    className="form-control"
+                                    name="driver"
+                                    value={driver}
+                                    onChange={this.handleDriverChange}
+                                >
+                                    <option disabled value="">
+                                        Select Driver
+                                    </option>
+                                    <option value="Postgresql">
+                                        Postgresql
+                                    </option>
+                                    <option value="Mysql">Mysql</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <div className="input-group input-group-lg">
+                                <div className="input-group-prepend">
+                                    <span
+                                        className="input-group-text"
+                                        id="inputGroup-sizing-default"
+                                    >
                                         <i className="fas fa-link" style={{ width: '30px' }}></i>
                                     </span>
                                 </div>
@@ -102,7 +136,7 @@ export default class ConnectPage extends React.Component {
                                     className="form-control"
                                     name="host"
                                     placeholder="Host"
-                                    value={this.state.host}
+                                    value={host}
                                     onChange={this.handleHospChange}
                                 />
                             </div>
@@ -123,7 +157,7 @@ export default class ConnectPage extends React.Component {
                                     className="form-control"
                                     name="port"
                                     placeholder="Port"
-                                    value={this.state.port}
+                                    value={port}
                                     onChange={this.handlePortChange}
                                 />
                             </div>
@@ -144,7 +178,7 @@ export default class ConnectPage extends React.Component {
                                     className="form-control"
                                     name="username"
                                     placeholder="Username"
-                                    value={this.state.username}
+                                    value={username}
                                     onChange={this.handleUsernameChange}
                                 />
                             </div>
@@ -165,7 +199,7 @@ export default class ConnectPage extends React.Component {
                                     className="form-control"
                                     name="password"
                                     placeholder="Password"
-                                    value={this.state.password}
+                                    value={password}
                                     onChange={this.handlePasswordChange}
                                 />
                             </div>
@@ -189,7 +223,7 @@ export default class ConnectPage extends React.Component {
                                     className="form-control"
                                     name="database"
                                     placeholder="Database"
-                                    value={this.state.database}
+                                    value={database}
                                     onChange={this.handleDbChange}
                                 />
                             </div>
@@ -213,7 +247,7 @@ export default class ConnectPage extends React.Component {
                                     className="form-control"
                                     name="code"
                                     placeholder="Code"
-                                    value={this.state.code}
+                                    value={code}
                                     onChange={this.handleCodeChange}
                                 />
                             </div>
