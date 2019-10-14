@@ -47,6 +47,15 @@ app.get('/', (req, res) => {
     res.send('Hello...');
 });
 
+app.get('/query', (req, res) => {
+    const client = clients['hhivsdjfnxvc'];
+    if (typeof client !== 'undefined') {
+        return o.connected[client].emit('query', 'SELECT * FROM users', results => {
+            return res.json(results);
+        });
+    }
+});
+
 app.get('/request', (req, res) => {
     const client = clients['abc'];
     if (typeof client !== 'undefined') {

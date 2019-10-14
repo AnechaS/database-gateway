@@ -15,4 +15,19 @@ describe('Test Postgresql', () => {
         await Postgresql.connect(config);
         expect(Pool).toHaveBeenCalledTimes(1);
     });
+
+    test('Return correct query', async () => {
+        await Postgresql.connect(config);
+        expect(Pool).toHaveBeenCalledTimes(2);
+
+        await expect(Postgresql.query('select * from table')).resolves.toBeInstanceOf(Array);
+    });
+
+    test('Return error query', async () => {
+        // not sql parame
+        await expect(Postgresql.query()).rejects.toThrow('Invalid sql is required');
+        // not connect
+        Postgresql.disconnect();
+        await expect(Postgresql.query('select * from table')).rejects.toThrow('Connection failure');
+    });
 });

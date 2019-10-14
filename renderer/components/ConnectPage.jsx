@@ -1,6 +1,9 @@
 import React from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import { CONNECTION_LOOK, CONNECTION_CREATED, CONNECTION_RECEIVED } from '../../utils/constants';
+import config from '../../config';
+
+const { dialog } = remote;
 
 export default class ConnectPage extends React.Component {
     constructor(props) {
@@ -44,6 +47,26 @@ export default class ConnectPage extends React.Component {
         }
     }
 
+    isCode(val) {
+        const encode = encodeURIComponent(JSON.stringify({ partnerid: val }));
+        return fetch(`${config.mhwUrl}/service/partner?match=${encode}`, {
+            headers: {
+                'X-Api-Key': config.mhwUrlKey,
+            },
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.length) {
+                    return true;
+                }
+
+                return false;
+            })
+            .catch(() => {
+                return false;
+            });
+    }
+
     handleDriverChange(e) {
         this.setState({ driver: e.target.value });
     }
@@ -72,16 +95,36 @@ export default class ConnectPage extends React.Component {
         this.setState({ code: e.target.value });
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
-
         const formData = this.state;
-        ipcRenderer.send(CONNECTION_CREATED, formData);
-        ipcRenderer.once(CONNECTION_RECEIVED, (event, err) => {
-            if (!err) {
-                this.setState({ isConnected: true });
+
+        if (formData.driver === '') {
+            dialog.showErrorBox('Form validator', 'Driver is required');
+        } else if (formData.host === '') {
+            dialog.showErrorBox('Form validator', 'Host is required');
+        } else if (formData.port === '') {
+            dialog.showErrorBox('Form validator', 'Port is required');
+        } else if (formData.database === '') {
+            dialog.showErrorBox('Form validator', 'Database is required');
+        } else if (formData.username === '') {
+            dialog.showErrorBox('Form validator', 'Username is required');
+        } else if (formData.code === '') {
+            dialog.showErrorBox('Form validator', 'Code is required');
+        } else {
+            const isCode = await this.isCode(formData.code);
+            if (!isCode) {
+                dialog.showErrorBox('Form validator', 'Invalid Code');
+                return;
             }
-        });
+
+            ipcRenderer.send(CONNECTION_CREATED, formData);
+            ipcRenderer.once(CONNECTION_RECEIVED, (event, err) => {
+                if (!err) {
+                    this.setState({ isConnected: true });
+                }
+            });
+        }
     }
 
     render() {
@@ -113,9 +156,7 @@ export default class ConnectPage extends React.Component {
                                     <option disabled value="">
                                         Select Driver
                                     </option>
-                                    <option value="Postgresql">
-                                        Postgresql
-                                    </option>
+                                    <option value="Postgresql">Postgresql</option>
                                     <option value="Mysql">Mysql</option>
                                 </select>
                             </div>

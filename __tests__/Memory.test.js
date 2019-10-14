@@ -1,5 +1,4 @@
 import Memory from '../Memory';
-const { Pool } = require('pg');
 
 const config = {
     driver: 'Postgresql',
@@ -14,33 +13,18 @@ const config = {
 jest.mock('pg');
 jest.mock('mysql');
 
+jest.spyOn(Memory, '_updateConnect').mockImplementation(() => jest.fn());
+jest.spyOn(Memory, '_createTableConnect').mockImplementation(() => jest.fn());
+jest.spyOn(Memory, 'lookConnect').mockImplementation(() => Promise.resolve(config));
+
 describe('Test Memory', () => {
     test('Return method store', async () => {
-        const spy = jest.spyOn(Memory, '_saveConnect').mockImplementation(() => config);
-
         const result = await Memory.store(config);
-
-        expect(spy).toHaveBeenCalled();
-
-        expect(Pool).toHaveBeenCalledTimes(1);
         expect(result).toEqual(expect.objectContaining(config));
-
-        spy.mockRestore();
     });
 });
 
-/* test('Return method look', async () => {
+test('Return method look', async () => {
     const result = await Memory.lookConnect();
     expect(result).toEqual(expect.objectContaining(config));
-}); */
-
-/* test('Return method query simple', async () => {
-    try {
-        const result = await Connection.query('SELECT * FROM table');
-
-        expect(Pool).toHaveBeenCalledTimes(2);
-        expect(result).not.toBeUndefined();
-    } catch (error) {
-        expect(error).toThrow();
-    }
-}); */
+});

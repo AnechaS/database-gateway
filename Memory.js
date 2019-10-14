@@ -1,32 +1,20 @@
 const sqlite3 = require('sqlite3').verbose();
-const database = require('./database');
 
 const sqlite = new sqlite3.Database('./memory.sqlite');
 
 class Memory {
     async store(params) {
-        const db = await database(params.driver);
-        await db.connect({
-            user: params.username,
-            host: params.host,
-            database: params.database,
-            password: params.password,
-            port: params.port,
-        });
-
-        return this._saveConnect([
-            params.driver,
-            params.host,
-            params.port,
-            params.username,
-            params.password,
-            params.database,
-            params.code,
-        ]);
-    }
-
-    _saveConnect(values) {
         return new Promise(resolve => {
+            const values = [
+                params.driver,
+                params.host,
+                params.port,
+                params.username,
+                params.password,
+                params.database,
+                params.code,
+            ];
+
             const sqlTableQuery = `
                     SELECT name FROM sqlite_master
                     WHERE type='table' AND name='connection' OR name='macths'
@@ -109,19 +97,6 @@ class Memory {
             });
         });
     }
-
-    // async query(queries) {
-    //     const row = await this.look();
-    //     const pool = new Pool({
-    //         user: row.username,
-    //         host: row.host,
-    //         database: row.database,
-    //         password: row.password,
-    //         port: row.port,
-    //     });
-
-    //     return pool.query(queries);
-    // }
 }
 
 module.exports = new Memory();

@@ -4,6 +4,7 @@ const emit = require('events');
 const path = require('path');
 const request = require('request');
 const Memory = require('./Memory');
+const Database = require('./database/index');
 const { CONNECTION_CREATED, CONNECTION_RECEIVED, CONNECTION_LOOK } = require('./utils/constants');
 const config = require('./config');
 
@@ -28,7 +29,7 @@ if (shouldQuit) {
 
 app.on('ready', () => {
     tray = new Tray(iconPath);
-    tray.setToolTip('optimus');
+    tray.setToolTip(config.appName);
     tray.setContextMenu(
         Menu.buildFromTemplate([
             {
@@ -66,6 +67,15 @@ ipcMain.on(CONNECTION_LOOK, async event => {
 
 ipcMain.on(CONNECTION_CREATED, async (event, data) => {
     try {
+        const db = await Database.driver(data.driver);
+        await db.connect({
+            username: data.username,
+            host: data.host,
+            database: data.database,
+            password: data.password,
+            port: data.port,
+        });
+
         const result = await Memory.store(data);
 
         socket.emit('new partner', data.code /*, (error) => {}*/);
@@ -88,11 +98,14 @@ socket.on('connect', async () => {
 });
 
 socket.on('query', async (sql, callback) => {
-    const result = await Memory.query(sql)
-        .then(res => {
-            return res.rows;
-        })
-        .catch(() => []);
+    let result;
+    try {
+        const db = await Database.currentDriver();
+        const query = await db.query(sql);
+        result = query;
+    } catch (error) {
+        result = [];
+    }
 
     callback(result);
 });
@@ -128,10 +141,10 @@ socket.on('disconnect', reason => {
 });
 
 const browserOption = {
-    title: 'Optimus',
+    title: config.appName,
     icon: iconPath,
     width: 520,
-    height: 700,
+    height: 750,
     maximizable: true,
     resizable: true,
     webPreferences: {

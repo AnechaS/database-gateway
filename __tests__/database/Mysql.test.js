@@ -10,9 +10,24 @@ const config = {
     password: '1234',
 };
 
-describe('Test Postgresql', () => {
+describe('Test Mysql', () => {
     test('Return correct connect', async () => {
         await Mysql.connect(config);
         expect(createPool).toHaveBeenCalledTimes(1);
+    });
+
+    test('Return correct query', async () => {
+        await Mysql.connect(config);
+        expect(createPool).toHaveBeenCalledTimes(2);
+
+        await expect(Mysql.query('select * from table')).resolves.toBeInstanceOf(Array);
+    });
+
+    test('Return error query', async () => {
+        // not sql parame
+        await expect(Mysql.query()).rejects.toThrow('Invalid sql is required');
+        // not connect
+        Mysql.disconnect();
+        await expect(Mysql.query('select * from table')).rejects.toThrow('Connection failure');
     });
 });
