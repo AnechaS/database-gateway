@@ -49,9 +49,9 @@ export default class ConnectPage extends React.Component {
 
     isCode(val) {
         const encode = encodeURIComponent(JSON.stringify({ partnerid: val }));
-        return fetch(`${config.mhwUrl}/service/partner?match=${encode}`, {
+        return fetch(`<URL>/service/partner?match=${encode}`, {
             headers: {
-                'X-Api-Key': config.mhwUrlKey,
+                'X-Api-Key': '<API-KEY>',
             },
         })
             .then(response => response.json())
