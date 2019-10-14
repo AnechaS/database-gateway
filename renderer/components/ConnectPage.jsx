@@ -1,7 +1,6 @@
 import React from 'react';
 import { ipcRenderer, remote } from 'electron';
 import { CONNECTION_LOOK, CONNECTION_CREATED, CONNECTION_RECEIVED } from '../../utils/constants';
-import config from '../../config';
 
 const { dialog } = remote;
 
