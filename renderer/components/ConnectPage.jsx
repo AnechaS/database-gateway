@@ -277,10 +277,7 @@ export default class ConnectPage extends React.Component {
                                         className="input-group-text"
                                         id="inputGroup-sizing-default"
                                     >
-                                        <i
-                                            className="fas fa-hospital-alt"
-                                            style={{ width: '30px' }}
-                                        ></i>
+                                        <i className="fas fa-qrcode" style={{ width: '30px' }}></i>
                                     </span>
                                 </div>
                                 <input
