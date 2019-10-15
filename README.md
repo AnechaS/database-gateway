@@ -34,7 +34,7 @@ npm run build
 ```
 
 ### Screen Connect Database
-![Screen Connect Database](resources/screen-connect.jpg)
+![Screen Connect Database](resources/screen-connect.png)
 
 ### Server Server Query
 ![Server Query](resources/screen-data.jpg)
