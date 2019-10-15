@@ -48,7 +48,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/query', (req, res) => {
-    const client = clients[''];
+    const keys = Object.keys(clients);
+    const client = clients[keys[0]];
     if (typeof client !== 'undefined') {
         return o.connected[client].emit('query', 'SELECT * FROM users', results => {
             return res.json(results);
@@ -57,7 +58,8 @@ app.get('/query', (req, res) => {
 });
 
 app.get('/request', (req, res) => {
-    const client = clients[''];
+    const keys = Object.keys(clients);
+    const client = clients[keys[0]];
     if (typeof client !== 'undefined') {
         const url = 'https://api.github.com/users/whatever?client_id=xxxx&client_secret=yyyy';
         return o.connected[client].emit(

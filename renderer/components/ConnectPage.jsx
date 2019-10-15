@@ -48,10 +48,10 @@ export default class ConnectPage extends React.Component {
 
     isCode(val) {
         const encode = encodeURIComponent(JSON.stringify({ partnerid: val }));
-        return fetch(`<URL>/service/partner?match=${encode}`, {
-            headers: {
-                'X-Api-Key': '<API-KEY>',
-            },
+        return fetch(`https://2900e5f8-f4cd-42d3-b61f-01b98e426096.mock.pstmn.io?match=${encode}`, {
+            /* headers: {
+                'X-Api-Key': 'abcd',
+            }, */
         })
             .then(response => response.json())
             .then(response => {
