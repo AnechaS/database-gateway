@@ -34,7 +34,10 @@ npm run build
 ```
 
 ### Screen Connect Database
-![Screen Connect Database](resources/screen-connect.png)
+
+<img src="resources/screen-connect.png" width="400" height="500" />
 
 ### Server Server Query
-![Server Query](resources/screen-data.jpg)
+
+<img src="resources/screen-data.jpg" width="400" height="500" />
+
