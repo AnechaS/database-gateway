@@ -1,5 +1,5 @@
 {
-  "name": "gateway-database-client",
+  "name": "gateway-database",
   "private": true,
   "version": "2.0.0",
   "description": "system external connection database",
@@ -7,6 +7,7 @@
   "scripts": {
     "start": "npm run webpack && electron .",
     "start-dev": "set ELECTRON_DEVELOP=1 && npm run webpack && electron .",
+    "start-server": "node ./server/index.js",
     "webpack": "webpack --mode production",
     "webpack-w": "webpack --mode development -w",
     "build": "npm run clean && npm run webpack && build -p never",
@@ -16,7 +17,6 @@
     "clean-build": "rm -rf ./build",
     "test": "jest",
     "lint": "eslint .",
-    "start-mock-server": "node ./__mocks__/server.js",
     "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
@@ -31,9 +31,9 @@
   "author": "Anachitheu.k@gmail.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Anechasun/gateway-database-client.git"
+    "url": "git+https://github.com/Anechasun/gateway-database.git"
   },
-  "homepage": "https://github.com/Anechasun/gateway-database-client.git#readme",
+  "homepage": "https://github.com/Anechasun/gateway-database.git#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",
     "bootstrap": "^4.1.3",
@@ -105,7 +105,7 @@
       {
         "provider": "github",
         "owner": "Anechasun",
-        "repo": "gateway-database-client"
+        "repo": "gateway-database"
       }
     ]
   }

@@ -40,7 +40,7 @@
     },
     "overrides": [
         {
-            "files": ["__mocks__/**/*.js"],
+            "files": ["server/**/*.js"],
             "rules": {
                 "no-console": "off"
             }
