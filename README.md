@@ -10,6 +10,25 @@ cd gateway-database
 
 npm install
 ```
+
+## Structure
+
+```bash
+├── database                #
+├── renderer                # renderer
+│   ├── components          # react component
+│   ├── styles              #
+│   ├── index.html          #
+│   └── index.jsx           #
+├── resources               # asset Media, etc
+├── tests                   # Testing
+├── server                  # mock server
+├── utils                   # utility (formats, validation, etc)
+├── Memory.js               # class sqlite
+└── main.js                 # app
+└── webpack.config.js       # webpack setting
+```
+
 ## เซิร์ฟเวอร์
 
 อันที่จริง server ควรไปติดตั้งอยู่ที่ server ที่คุณต้องการ แต่ผมให้มันอยู่ใน project นี้เพราะผมไม่ต้องแยก Repo ออกจากกันและทำให้การทำสอบแอพงานขึ้น
