@@ -8,8 +8,6 @@ app.use(express.json());
 
 const o = sockets.of('/');
 o.on('connect', socket => {
-    console.log('connected ' + socket.id);
-
     socket.on('new partner', async (id, callback) => {
         let err = true;
         const isExist = true;
@@ -26,18 +24,6 @@ o.on('connect', socket => {
         }
     });
 
-    socket.on('valid partner', async (id, callback) => {
-        let err = true;
-        const isExist = true;
-
-        if (isExist) {
-            err = false;
-        }
-
-        console.log(`valid partner${err}`);
-        callback(err);
-    });
-
     socket.on('disconnect', () => {
         clients = {};
     });
@@ -51,7 +37,8 @@ app.get('/query', (req, res) => {
     const keys = Object.keys(clients);
     const client = clients[keys[0]];
     if (typeof client !== 'undefined') {
-        return o.connected[client].emit('query', 'SELECT * FROM users', results => {
+        const { sql } = req.query;
+        return o.connected[client].emit('query', sql, results => {
             return res.json(results);
         });
     }

@@ -12,7 +12,7 @@ emit.EventEmitter.defaultMaxListeners = 0;
 
 let mainWindow;
 let tray = null;
-const socket = io(config.ws || 'ws://localhost:3000');
+const socket = io(config.WS || 'ws://localhost:3000');
 const iconPath = nativeImage.createFromPath(path.join(__dirname, 'resources/icon.ico'));
 
 const shouldQuit = app.makeSingleInstance(() => {
@@ -29,7 +29,7 @@ if (shouldQuit) {
 
 app.on('ready', () => {
     tray = new Tray(iconPath);
-    tray.setToolTip(config.appName);
+    tray.setToolTip(config.APP_NAME);
     tray.setContextMenu(
         Menu.buildFromTemplate([
             {
@@ -48,7 +48,7 @@ app.on('ready', () => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         mainWindow = null;
-        if (config.isDevelopment) {
+        if (config.DEVELOPMENT_MODE) {
             app.quit();
         }
     }
@@ -141,7 +141,7 @@ socket.on('disconnect', reason => {
 });
 
 const browserOption = {
-    title: config.appName,
+    title: config.APP_NAME,
     icon: iconPath,
     width: 520,
     height: 750,
@@ -152,7 +152,7 @@ const browserOption = {
     },
 };
 
-if (!config.isDevelopment) {
+if (!config.DEVELOPMENT_MODE) {
     browserOption.maximizable = false;
     browserOption.resizable = false;
 
@@ -169,7 +169,7 @@ function createWindow() {
     if (mainWindow == null) {
         mainWindow = new BrowserWindow(browserOption);
 
-        if (config.isDevelopment) {
+        if (config.DEVELOPMENT_MODE) {
             mainWindow.webContents.openDevTools();
         } else {
             mainWindow.setMenu(null);

@@ -33,6 +33,15 @@ npm run start-dev
 npm run build
 ```
 
+## ตัวอย่างการเรียกใช้งาน
+
+โค้ดส่งคำสั่งให้ Client ดึงข้อมูล จาก Database [ดูตัวอย่าง](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L36)
+
+```bash
+curl -X GET \
+  'http://localhost:3000/query?sql=SELECT * FROM users'
+```
+
 ### Screen Connect Database
 
 <img src="resources/screen-connect.png" width="400" height="500" />

@@ -46,13 +46,9 @@ export default class ConnectPage extends React.Component {
         }
     }
 
+    // valid code simple
     isCode(val) {
-        const encode = encodeURIComponent(JSON.stringify({ partnerid: val }));
-        return fetch(`https://2900e5f8-f4cd-42d3-b61f-01b98e426096.mock.pstmn.io?match=${encode}`, {
-            /* headers: {
-                'X-Api-Key': 'abcd',
-            }, */
-        })
+        return fetch(`https://2900e5f8-f4cd-42d3-b61f-01b98e426096.mock.pstmn.io?code=${val}`)
             .then(response => response.json())
             .then(response => {
                 if (response.length) {
