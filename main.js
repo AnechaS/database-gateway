@@ -5,6 +5,7 @@ const path = require('path');
 const request = require('request');
 const Memory = require('./Memory');
 const Database = require('./database/index');
+const validateCode = require('./utils/validate-code');
 const { CONNECTION_CREATED, CONNECTION_RECEIVED, CONNECTION_LOOK } = require('./utils/constants');
 const config = require('./config');
 
@@ -12,7 +13,7 @@ emit.EventEmitter.defaultMaxListeners = 0;
 
 let mainWindow;
 let tray = null;
-const socket = io(config.WS || 'ws://localhost:3000');
+const socket = io(config.APP_WS_URL);
 const iconPath = nativeImage.createFromPath(path.join(__dirname, 'resources/icon.ico'));
 
 const shouldQuit = app.makeSingleInstance(() => {
@@ -61,12 +62,20 @@ app.on('activate', () => {
 });
 
 ipcMain.on(CONNECTION_LOOK, async event => {
-    const result = await Memory.lookConnect();
+    const result = await Memory.look();
     event.returnValue = result;
 });
 
 ipcMain.on(CONNECTION_CREATED, async (event, data) => {
     try {
+        const prevResult = await Memory.look();
+        if (prevResult && prevResult.code !== data.code) {
+            const validCode = await validateCode(data.code);
+            if (validCode) {
+                throw new Error('Invalid Code');
+            }
+        }
+
         const db = await Database.driver(data.driver);
         await db.connect({
             username: data.username,
@@ -87,7 +96,7 @@ ipcMain.on(CONNECTION_CREATED, async (event, data) => {
 });
 
 socket.on('connect', async () => {
-    const conn = await Memory.lookConnect();
+    const conn = await Memory.look();
     if (conn) {
         socket.emit('new partner', conn.code, err => {
             if (err) {

@@ -12,10 +12,12 @@ const config = {
 
 jest.mock('pg');
 jest.mock('mysql');
+jest.mock('mssql');
 
-jest.spyOn(Memory, '_updateConnect').mockImplementation(() => jest.fn());
-jest.spyOn(Memory, '_createTableConnect').mockImplementation(() => jest.fn());
-jest.spyOn(Memory, 'lookConnect').mockImplementation(() => Promise.resolve(config));
+jest.spyOn(Memory, '_update').mockImplementation(() => jest.fn());
+jest.spyOn(Memory, '_createTable').mockImplementation(() => jest.fn());
+jest.spyOn(Memory, '_create').mockImplementation(() => jest.fn());
+jest.spyOn(Memory, 'look').mockImplementation(() => Promise.resolve(config));
 
 describe('Test Memory', () => {
     test('Return method store', async () => {
@@ -25,6 +27,6 @@ describe('Test Memory', () => {
 });
 
 test('Return method look', async () => {
-    const result = await Memory.lookConnect();
+    const result = await Memory.look();
     expect(result).toEqual(expect.objectContaining(config));
 });

@@ -23,20 +23,20 @@ class Memory {
                 sqlite.serialize(async () => {
                     if (row.length) {
                         values.push(1);
-                        this._updateConnect(values);
+                        this._update(values);
                     } else {
-                        this._createTableConnect();
-                        this._createConnect(values);
+                        this._createTable();
+                        this._create(values);
                     }
 
-                    const result = await this.lookConnect();
+                    const result = await this.look();
                     return resolve(result);
                 });
             });
         });
     }
 
-    _createConnect(values) {
+    _create(values) {
         const sqlInsert = `
             INSERT INTO connection (
                 driver,
@@ -52,7 +52,7 @@ class Memory {
         sqlite.run(sqlInsert, values);
     }
 
-    _createTableConnect() {
+    _createTable() {
         const sqlCreateTable = `
             CREATE TABLE IF NOT EXISTS connection (
                 id integer PRIMARY KEY AUTOINCREMENT,
@@ -68,7 +68,7 @@ class Memory {
         sqlite.run(sqlCreateTable);
     }
 
-    _updateConnect(values) {
+    _update(values) {
         const sqlUpdate = `
             UPDATE connection
             SET
@@ -84,7 +84,7 @@ class Memory {
         sqlite.run(sqlUpdate, values);
     }
 
-    lookConnect() {
+    look() {
         return new Promise(resolve => {
             const sqlQuery = `SELECT * FROM connection`;
             sqlite.get(sqlQuery, (err, rows) => {

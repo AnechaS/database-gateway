@@ -1,8 +1,8 @@
 # Gateway Database
 
-ระบบดึงข้อมูล Database ภายนอก ระบบนี้จะช่วยแก้ปัญหา เมือคุณไม่สามารถเชื่อมต่อกับ server ภายนอกได้ด้วยวิธี VPN และวิธีอืนๆ หลักการทำงานของโปรแกรมนี้ จะให้ server TCP ควบคุมตัวโปรแกรม Electron ที่ได้เชื่อมต่อกับ database ให้ทำการดึงข้อมูลตามที่ server ได้ส่ง Sql ไป
+The system connects to an external database. This system will help solve problems. When you are not able to connect to an external server using a VPN method or another method. The working principle of this program is websocket  server emit event  send to The client (Electron) that is connected to the database. You should have to separate the server folder outside of this app. But which I included because I didn't want to separate positions
 
-## การติดตั้ง
+## Install
 
 ```bash
 git clone https://github.com/Anechasun/gateway-database.git
@@ -11,61 +11,68 @@ cd gateway-database
 npm install
 ```
 
-## Structure
+## Script
 
-```bash
-├── database                #
-├── renderer                # renderer
-│   ├── components          # react component
-│   ├── styles              #
-│   ├── index.html          #
-│   └── index.jsx           #
-├── resources               # asset Media, etc
-├── tests                   # Testing
-├── server                  # mock server
-├── utils                   # utility (formats, validation, etc)
-├── Memory.js               # class sqlite
-└── main.js                 # app
-└── webpack.config.js       # webpack setting
-```
-
-## เซิร์ฟเวอร์
-
-อันที่จริง server ควรไปติดตั้งอยู่ที่ server ที่คุณต้องการ แต่ผมให้มันอยู่ใน project นี้เพราะผมไม่ต้องแยก Repo ออกจากกันและทำให้การทำสอบแอพงานขึ้น
+#### Start server
 
 ```bash
 npm run start-server
 ```
 
-## client
-
-client ก็คือตัวโปรแกรม ที่เชื่มต่ออยู่กับ database
+#### Start app
 
 ```bash
-# production
 npm start
-
-# development
+```
+#### Develop
+```bash
 npm run start-dev
+npm run webpack-w
+```
 
-# build .EXE
+#### Lints and fixes files
+
+```bash
+npm run lint
+```
+
+#### Testing
+```bash
+npm test
+```
+
+#### Build App
+
+```bash
 npm run build
 ```
 
-## ตัวอย่างการเรียกใช้งาน
+## To use
 
-โค้ดส่งคำสั่งให้ Client ดึงข้อมูล จาก Database [ดูตัวอย่าง](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L36)
+#### Screen Connect Database
+
+**`Driver`**: driver database
+
+**`Host`**: Server to connect to
+
+**`Port`**: Port to connect
+
+**`Username`**: User name to use for authentication
+
+**`Password`**:  Password to use for authentication
+
+**`Database`**: Database to connect to (default: dependent on server configuration).
+
+**`Code`**: client code
+
+<img src="resources/screen-connect.png" width="400" height="500" />
+
+#### Server connect Client
+example [see](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L21) line 21:30
 
 ```bash
 curl -X GET \
   'http://localhost:3000/query?sql=SELECT * FROM users'
 ```
-
-### Screen Connect Database
-
-<img src="resources/screen-connect.png" width="400" height="500" />
-
-### Server Server Query
-
 <img src="resources/screen-data.jpg" width="400" height="500" />
 

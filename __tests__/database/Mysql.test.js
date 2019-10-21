@@ -1,4 +1,4 @@
-import { createPool } from 'mysql';
+import * as sql from 'mysql';
 import Mysql from '../../database/Mysql';
 
 jest.mock('mysql');
@@ -13,12 +13,12 @@ const config = {
 describe('Test Mysql', () => {
     test('Return correct connect', async () => {
         await Mysql.connect(config);
-        expect(createPool).toHaveBeenCalledTimes(1);
+        expect(sql.createPool).toHaveBeenCalledTimes(1);
     });
 
     test('Return correct query', async () => {
         await Mysql.connect(config);
-        expect(createPool).toHaveBeenCalledTimes(2);
+        expect(sql.createPool).toHaveBeenCalledTimes(2);
 
         await expect(Mysql.query('select * from table')).resolves.toBeInstanceOf(Array);
     });

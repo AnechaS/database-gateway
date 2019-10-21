@@ -7,7 +7,7 @@ class Mysql {
 
     connect(options) {
         return new Promise((resolve, reject) => {
-            const db = mysql.createPool({
+            const pool = mysql.createPool({
                 host: options.host,
                 database: options.database,
                 user: options.username,
@@ -15,7 +15,7 @@ class Mysql {
                 port: options.port,
             });
 
-            db.getConnection((err, connection) => {
+            pool.getConnection((err, connection) => {
                 if (err) {
                     return reject(err);
                 }

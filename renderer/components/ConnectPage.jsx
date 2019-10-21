@@ -46,22 +46,6 @@ export default class ConnectPage extends React.Component {
         }
     }
 
-    // valid code simple
-    isCode(val) {
-        return fetch(`https://2900e5f8-f4cd-42d3-b61f-01b98e426096.mock.pstmn.io?code=${val}`)
-            .then(response => response.json())
-            .then(response => {
-                if (response.length) {
-                    return true;
-                }
-
-                return false;
-            })
-            .catch(() => {
-                return false;
-            });
-    }
-
     handleDriverChange(e) {
         this.setState({ driver: e.target.value });
     }
@@ -93,7 +77,6 @@ export default class ConnectPage extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         const formData = this.state;
-
         if (formData.driver === '') {
             dialog.showErrorBox('Form validator', 'Driver is required');
         } else if (formData.host === '') {
@@ -107,12 +90,6 @@ export default class ConnectPage extends React.Component {
         } else if (formData.code === '') {
             dialog.showErrorBox('Form validator', 'Code is required');
         } else {
-            const isCode = await this.isCode(formData.code);
-            if (!isCode) {
-                dialog.showErrorBox('Form validator', 'Invalid Code');
-                return;
-            }
-
             ipcRenderer.send(CONNECTION_CREATED, formData);
             ipcRenderer.once(CONNECTION_RECEIVED, (event, err) => {
                 if (!err) {
@@ -153,6 +130,7 @@ export default class ConnectPage extends React.Component {
                                     </option>
                                     <option value="Postgresql">Postgresql</option>
                                     <option value="Mysql">Mysql</option>
+                                    <option value="Mssql">Microsoft SQL Server</option>
                                 </select>
                             </div>
                         </div>

@@ -1,24 +1,23 @@
-const { Pool } = require('pg');
+const mssql = require('mssql');
 
-class Postgresql {
+class Mssql {
     constructor() {
         this.conn = null;
     }
 
-    connect(options) {
-        const pool = new Pool({
-            host: options.host,
+    async connect(options) {
+        const pool = new mssql.ConnectionPool({
+            server: options.host,
             database: options.database,
             user: options.username,
             password: options.password,
-            port: options.port || 5334,
+            port: Number(options.port),
         });
 
-        return pool.connect().then(client => {
-            this.conn = client;
+        const client = await pool.connect();
+        this.conn = client;
 
-            return client;
-        });
+        return pool;
     }
 
     async query(sql = '') {
@@ -31,8 +30,7 @@ class Postgresql {
         }
 
         const result = await this.conn.query(sql);
-
-        return result.rows;
+        return result.recordset;
     }
 
     disconnect() {
@@ -40,4 +38,4 @@ class Postgresql {
     }
 }
 
-module.exports = new Postgresql();
+module.exports = new Mssql();

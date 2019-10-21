@@ -1,36 +1,21 @@
 const http = require('http');
 const express = require('express');
 const sockets = require('socket.io')();
-let clients = {};
+const clients = {};
 
 const app = express();
 app.use(express.json());
 
-const o = sockets.of('/');
-o.on('connect', socket => {
-    socket.on('new partner', async (id, callback) => {
-        let err = true;
-        const isExist = true;
-
-        if (isExist) {
-            err = false;
-            clients[id] = socket.id;
-
-            console.log(`connect partner ${id}`);
-        }
-
-        if (callback) {
-            callback(err);
-        }
-    });
-
-    socket.on('disconnect', () => {
-        clients = {};
-    });
+app.get('/', (req, res) => {
+    res.send('Wellcome Gateway database');
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello...');
+app.get('/available/:key', (req, res) => {
+    const { key } = req.params;
+
+    return res.json({
+        isAvailable: typeof clients[key] !== 'undefined',
+    });
 });
 
 app.get('/query', (req, res) => {
@@ -72,6 +57,43 @@ const server = http.createServer(app);
 
 server.listen(3000, () => {
     console.log('listening on *:3000');
+});
+
+const o = sockets.of('/');
+o.on('connect', socket => {
+    socket.on('new partner', async (id, callback) => {
+        let err = true;
+        const isExist = true;
+
+        if (isExist) {
+            err = false;
+            clients[id] = socket.id;
+
+            console.log(`connect partner ${id}`);
+        }
+
+        if (callback) {
+            callback(err);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        let i;
+        for (const key in clients) {
+            if (clients.hasOwnProperty(key)) {
+                const client = clients[key];
+                if (client === socket.id) {
+                    i = key;
+                }
+            }
+        }
+
+        console.log(`disconnect client ${clients[i]}`);
+
+        if (typeof i !== 'undefined') {
+            delete clients[i];
+        }
+    });
 });
 
 sockets.listen(server);

@@ -1,8 +1,9 @@
 const Postgresql = require('./Postgresql');
 const Mysql = require('./Mysql');
+const Mssql = require('./Mssql');
 const Memory = require('../Memory');
 
-const dbs = { Postgresql, Mysql };
+const dbs = { Postgresql, Mysql, Mssql };
 
 exports.driver = function(string) {
     if (!dbs.hasOwnProperty(string)) {
@@ -13,7 +14,7 @@ exports.driver = function(string) {
 };
 
 exports.currentDriver = async function() {
-    const options = await Memory.lookConnect();
+    const options = await Memory.look();
     if (!dbs.hasOwnProperty(options.driver)) {
         throw new Error('Database does not exist');
     }

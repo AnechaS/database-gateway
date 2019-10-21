@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import * as sql from 'pg';
 import Postgresql from '../../database/Postgresql';
 
 jest.mock('pg');
@@ -13,12 +13,12 @@ const config = {
 describe('Test Postgresql', () => {
     test('Return correct connect', async () => {
         await Postgresql.connect(config);
-        expect(Pool).toHaveBeenCalledTimes(1);
+        expect(sql.Pool).toHaveBeenCalledTimes(1);
     });
 
     test('Return correct query', async () => {
         await Postgresql.connect(config);
-        expect(Pool).toHaveBeenCalledTimes(2);
+        expect(sql.Pool).toHaveBeenCalledTimes(2);
 
         await expect(Postgresql.query('select * from table')).resolves.toBeInstanceOf(Array);
     });
