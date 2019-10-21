@@ -101,7 +101,13 @@
     "win": {
       "icon": "resources/icon.png",
       "target": [
-        "nsis"
+        {
+            "target": "nsis",
+            "arch": [
+              "x64",
+              "ia32"
+            ]
+        }
       ]
     },
     "publish": [
