@@ -69,7 +69,7 @@ ipcMain.on(CONNECTION_LOOK, async event => {
 ipcMain.on(CONNECTION_CREATED, async (event, data) => {
     try {
         const prevResult = await Memory.look();
-        if (prevResult && prevResult.code !== data.code) {
+        if (!prevResult || (prevResult && prevResult.code !== data.code)) {
             const validCode = await validateCode(data.code);
             if (validCode) {
                 throw new Error('Invalid Code');
