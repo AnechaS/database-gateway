@@ -13,6 +13,7 @@ class Mysql {
                 user: options.username,
                 password: options.password,
                 port: options.port,
+                charset: 'utf8mb4',
             });
 
             pool.getConnection((err, connection) => {
