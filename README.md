@@ -51,24 +51,24 @@ npm run build
 
 #### Screen Connect Database
 
-**`Driver`**: driver database
+**`Driver`**: Driver database (postgresql, mysql, microsoft-sql-server)
 
-**`Host`**: Server to connect to
+**`Host`**: Server database to connect to
 
-**`Port`**: Port to connect
+**`Port`**: Port database to connect
 
-**`Username`**: User name to use for authentication
+**`Username`**: User database to use for authentication
 
-**`Password`**:  Password to use for authentication
+**`Password`**:  Password database to use for authentication
 
-**`Database`**: Database to connect to (default: dependent on server configuration).
+**`Database`**: Database name to connect to (default: dependent on server configuration).
 
 **`Code`**: client code
 
 <img src="resources/screen-connect.png" width="400" height="500" />
 
-#### Server connect Client
-example [see](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L21) line 21:30
+#### Server connect to getway
+code example [see](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L21) line 21:30
 
 ```bash
 curl -X GET \
