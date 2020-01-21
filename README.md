@@ -11,7 +11,7 @@ cd gateway-database
 npm install
 ```
 
-## Script
+## Command
 
 #### Start server
 
@@ -24,19 +24,19 @@ npm run start-server
 ```bash
 npm start
 ```
-#### Develop
+#### Start app develop
 ```bash
 npm run start-dev
 npm run webpack-w
 ```
 
-#### Lints and fixes files
+#### Eslints
 
 ```bash
 npm run lint
 ```
 
-#### Testing
+#### Test
 ```bash
 npm test
 ```
