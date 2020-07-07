@@ -58,7 +58,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "^7.1.5",
     "css-loader": "^1.0.0",
-    "electron": "^2.0.6",
+    "electron": "^9.1.0",
     "electron-builder": "^20.26.1",
     "electron-rebuild": "^1.8.2",
     "eslint": "^5.3.0",
