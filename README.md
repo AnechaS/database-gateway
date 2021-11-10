@@ -1,12 +1,12 @@
-# Gateway Database
+# API Gateway Database
 
 The system connects to an external database. This system will help solve problems. When you are not able to connect to an external server using a VPN method or another method. The working principle of this program is websocket  server emit event  send to The client (Electron) that is connected to the database. You should have to separate the server folder outside of this app. But which I included because I didn't want to separate positions
 
 ## Install
 
 ```bash
-git clone https://github.com/Anechasun/gateway-database.git
-cd gateway-database
+git clone https://github.com/Anechasun/api-gateway-database.git
+cd api-gateway-database
 
 npm install
 ```
