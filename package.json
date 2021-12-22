@@ -1,7 +1,7 @@
 {
-  "name": "gateway-database",
+  "name": "api-gateway-database",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "database connection to external",
   "main": "main.js",
   "scripts": {
