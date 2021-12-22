@@ -36,9 +36,9 @@ npm run build
 
 ## To use
 
-### 1. Run API Server
+#### 1. Run API Server
 
-### 2. Open the Client app and Configure the database.
+#### 2. Open the Client app and Configure the database.
 
 **`Driver`**: Driver database (postgresql, mysql, microsoft-sql-server)
 
@@ -56,7 +56,7 @@ npm run build
 
 <img src="resources/screen-connect.png" width="400" height="500" />
 
-### 3. Send request to server
+#### 3. Send request to server
 
 this example api [see](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L21)
 
