@@ -1,8 +1,12 @@
 # API Gateway Database
 
-The system connects to an external database. This system will help solve problems. When you are not able to connect to an external server using a VPN method or another method. The working principle of this program is websocket  server emit event  send to The client (Electron) that is connected to the database. You should have to separate the server folder outside of this app. But which I included because I didn't want to separate positions
+เป็นระบบช่วยแก้ปัญหาเมื่อคุณไม่สามารถเชื่อมต่อฐานข้อมูลภายนอกด้วย VPN หรือวิธีอื่นๆได้ (ฐานข้อมูลไม่ได้เปิดเป็น Public) โดยระบบนี้จะใช้ความสามารถของ [TCP protocal](https://en.wikipedia.org/wiki/Transmission_Control_Protocol) ในการเข้าถึงฐานข้อมูลที่เชื่อมต่อกับโปรแกรมฝั่งเซิร์ฟเวอร์ที่เราพัฒนา (โปรแกรมฝั่ง Client) ซึ่งหลักการทำงานคือ ผู้ใช้ส่ง Request คำสั่ง SQL ไปทาง API จากนั้น Server ก็จะไปควบคุมโปรแกรมผั่ง Client ที่เชื่อมต่ออยู่กับฐานข้อมูล ให้รันคำสั่ง SQL และนำผลลัพกลับไป
 
-## Install
+This system will help solve the problem. When you are unable to connect to an external server using VPN or other methods, using the [TCP protocol] capability to access the database connected to the client-side program.
+
+## Command
+
+### Install
 
 ```bash
 git clone https://github.com/Anechasun/api-gateway-database.git
@@ -11,45 +15,30 @@ cd api-gateway-database
 npm install
 ```
 
-## Command
-
-#### Start server
+### Run API Server 
 
 ```bash
 npm run start-server
 ```
 
-#### Start app
+### Start Client app for develop
 
 ```bash
 npm start
 ```
-#### Start app develop
-```bash
-npm run start-dev
-npm run webpack-w
-```
 
-#### Eslints
-
-```bash
-npm run lint
-```
-
-#### Test
-```bash
-npm test
-```
-
-#### Build App
+### Build Client app to file install
 
 ```bash
 npm run build
 ```
 
+
 ## To use
 
-#### Screen Connect Database
+### 1. Run API Server
+
+### 2. Open the Client app and Configure the database.
 
 **`Driver`**: Driver database (postgresql, mysql, microsoft-sql-server)
 
@@ -67,8 +56,9 @@ npm run build
 
 <img src="resources/screen-connect.png" width="400" height="500" />
 
-#### Server connect to getway
-code example [see](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L21) line 21:30
+### 3. Send request to server
+
+this example api [see](https://github.com/Anechasun/gateway-database/blob/master/server/index.js#L21)
 
 ```bash
 curl -X GET \
