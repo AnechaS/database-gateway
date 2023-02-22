@@ -40,19 +40,19 @@ npm run build
 
 #### 2. Open the Client app and Configure the database.
 
-**`Driver`**: Driver database (postgresql, mysql, microsoft-sql-server)
+**`Driver`**: Database types (postgresql, mysql, microsoft-sql-server)
 
-**`Host`**: Server database to connect to
+**`Host`**: Database server.
 
-**`Port`**: Port database to connect
+**`Port`**: Database port.
 
-**`Username`**: User database to use for authentication
+**`Username`**: Username used to establish the connection.
 
-**`Password`**:  Password database to use for authentication
+**`Password`**:  Password used to establish the connection.
 
-**`Database`**: Database name to connect to (default: dependent on server configuration).
+**`Database`**: Database name.
 
-**`Code`**: client code
+**`Code`**: Client unique id.
 
 <img src="resources/screen-connect.png" width="400" height="500" />
 
