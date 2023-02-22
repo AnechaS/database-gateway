@@ -34,7 +34,7 @@ npm run build
 ```
 
 
-## To use
+## Usage
 
 #### 1. Run API Server
 
