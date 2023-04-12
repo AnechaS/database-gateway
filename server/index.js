@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Wellcome Gateway database');
+    res.send('ok');
 });
 
 app.get('/available/:key', (req, res) => {

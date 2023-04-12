@@ -6,28 +6,12 @@ services:
     restart: unless-stopped
     ports:
       - 3306:3306
-    # volumes:
-    #   - "mysql_data:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: 123456
     container_name: mysql
     tty: true
     networks:
       - net
-  phpmyadmin:
-    image: phpmyadmin
-    restart: unless-stopped
-    ports:
-      - 8888:80
-    environment:
-      - PMA_ARBITRARY=1
-    container_name: phpmyadmin
-    networks:
-      - net
-
-# volumes:
-#   mysql_data:
-#     driver: local
 
 networks:
   net:

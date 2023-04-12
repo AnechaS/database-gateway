@@ -1,21 +1,22 @@
 {
-  "name": "api-gateway-database",
+  "name": "database-gateway",
   "private": true,
   "version": "2.1.1",
-  "description": "database connection to external",
+  "description": "app connects to a remote database",
   "main": "main.js",
+  "engines": {
+    "node": ">=10.13.0 <14"
+  },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "npm run webpack && electron .",
-    "start-dev": "set ELECTRON_DEVELOP=1 && npm run webpack && electron .",
+    "start-dev": "cross-env ELECTRON_DEVELOP=1 && npm run webpack && electron .",
     "start-server": "node ./server/index.js",
     "webpack": "webpack --mode production",
     "webpack-w": "webpack --mode development -w",
-    "build": "npm run clean && npm run webpack && build -p never",
-    "release": "npm run clean && npm run webpack && build -p always",
-    "clean": "npm run clean-build && npm run clean-webpack",
-    "clean-webpack": "rm -rf ./dist",
-    "clean-build": "rm -rf ./build",
+    "build": "npm run clean && npm run webpack && electron-builder -p never -w",
+    "release": "npm run clean && npm run webpack && electron-builder -p always -w",
+    "clean": "rimraf ./build && rimraf ./dist",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -30,49 +31,51 @@
     "request",
     "bootstrap"
   ],
-  "author": "Anachitheu.k@gmail.com",
+  "author": "anachitheu.k@gmail.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Anechasun/gateway-database.git"
+    "url": "git+https://github.com/Anechasun/database-gateway.git"
   },
-  "homepage": "https://github.com/Anechasun/gateway-database.git#readme",
+  "homepage": "https://github.com/Anechasun/database-gateway.git#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.2",
-    "bootstrap": "^4.1.3",
-    "jquery": "^3.3.1",
-    "mssql": "^5.1.0",
-    "mysql": "^2.17.1",
-    "pg": "^7.4.3",
-    "popper.js": "^1.14.4",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "request": "^2.88.0",
-    "socket.io": "^2.2.0",
-    "sqlite3": "^4.0.2"
+    "@fortawesome/fontawesome-free": "5.10.2",
+    "bootstrap": "4.1.3",
+    "jquery": "3.3.1",
+    "mssql": "5.1.0",
+    "mysql": "2.17.1",
+    "pg": "7.4.3",
+    "popper.js": "1.14.4",
+    "react": "16.4.2",
+    "react-dom": "16.4.2",
+    "request": "2.88.0",
+    "socket.io": "2.2.0",
+    "sqlite3": "4.2.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^8.2.6",
-    "babel-jest": "^24.9.0",
-    "babel-loader": "^7.1.5",
-    "css-loader": "^1.0.0",
-    "electron": "^9.1.0",
-    "electron-builder": "^22.11.7",
-    "electron-rebuild": "^1.8.2",
-    "eslint": "^5.3.0",
-    "eslint-plugin-react": "^7.10.0",
-    "express": "^4.17.1",
-    "file-loader": "^1.1.11",
-    "jest": "^24.9.0",
-    "prettier": "^1.14.0",
-    "react-test-renderer": "^16.9.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.22.0",
-    "url-loader": "^1.1.1",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0"
+    "@babel/preset-env": "7.5.5",
+    "@babel/preset-react": "7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "8.2.6",
+    "babel-jest": "24.9.0",
+    "babel-loader": "7.1.5",
+    "cross-env": "7.0.3",
+    "css-loader": "1.0.0",
+    "electron": "2.0.6",
+    "electron-builder": "22.10.5",
+    "electron-rebuild": "1.11.0",
+    "eslint": "5.3.0",
+    "eslint-plugin-react": "7.10.0",
+    "express": "4.17.1",
+    "file-loader": "1.1.11",
+    "jest": "24.9.0",
+    "prettier": "1.14.0",
+    "react-test-renderer": "16.9.0",
+    "rimraf": "2.7.1",
+    "sass-loader": "7.1.0",
+    "style-loader": "0.22.0",
+    "url-loader": "1.1.1",
+    "webpack": "4.16.5",
+    "webpack-cli": "3.1.0"
   },
   "jest": {
     "transform": {
@@ -81,8 +84,8 @@
     }
   },
   "build": {
-    "appId": "com.electron.gateway-database",
-    "productName": "gateway-database",
+    "appId": "com.electron.database-gateway",
+    "productName": "database-gateway",
     "directories": {
       "output": "build/"
     },
@@ -114,7 +117,7 @@
       {
         "provider": "github",
         "owner": "Anechasun",
-        "repo": "gateway-database"
+        "repo": "database-gateway"
       }
     ]
   }
